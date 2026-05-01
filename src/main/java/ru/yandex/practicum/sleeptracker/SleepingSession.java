@@ -4,7 +4,7 @@ public class SleepingSession {
     private String date; // Дата сна
     private int startTime; // Время начала сна (например, в минутах от начала суток)
     private int endTime; // Время окончания сна
-    private boolean isRestful; // Флаг, указывающий на качество сна
+    private boolean isRestful; // Флаг, указывающий на качество сна, для фильтрации сна по качеству пригодится
 
     public SleepingSession(String date, int startTime, int endTime, boolean isRestful) {
         this.date = date;
@@ -42,17 +42,17 @@ public class SleepingSession {
         return isRestful;
     }
 
-    public void setRestful(boolean restful) {
+    public void setRestful(boolean restful) {//для фильтрации сна по качеству пригодится
         isRestful = restful;
     }
 
     @Override
     public String toString() {
-        return "SleepingSession{" +
-                "date='" + date + '\'' +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                ", isRestful=" + isRestful +
+        return "Сессия сна: " +
+                "дата '" + date + '\'' +
+                ", засыпание: " + startTime +
+                ", пробуждение: " + endTime +
+                ", isRestful=" + isRestful +//на сколько качественный был сон
                 '}';
     }
 
