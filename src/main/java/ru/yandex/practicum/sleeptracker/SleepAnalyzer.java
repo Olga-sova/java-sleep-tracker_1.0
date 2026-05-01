@@ -1,5 +1,8 @@
 package ru.yandex.practicum.sleeptracker;
 
+import java.util.List;
+
+
 public class SleepAnalyzer {
     public enum SleepQuality {
         BAD, NORMAL, GOOD
@@ -16,4 +19,17 @@ public class SleepAnalyzer {
             return SleepQuality.NORMAL;
         }
     }
+
+    public double calculateQualityPercentage(List<SleepingSession> sessions) { //подсчёт true сессий в процентах
+        if (sessions.isEmpty()) {
+            return 0.0; // избегаем деления на ноль
+        }
+
+        long restfulCount = sessions.stream()
+                .filter(SleepingSession::isRestful)
+                .count();
+
+        return (double) restfulCount / sessions.size() * 100;
+    }
+
 }
