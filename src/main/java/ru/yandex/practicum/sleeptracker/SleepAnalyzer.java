@@ -26,15 +26,19 @@ public class SleepAnalyzer {
             return 0.0;
         }
 
-        long restfulCount = sessions.stream()
-                .filter(SleepingSession::isRestful)
+        long goodSessionsCount = sessions.stream()
+                .filter(session ->
+                        session.getQuality() == SleepQuality.GOOD ||
+                                session.getQuality() == SleepQuality.NORMAL
+                )
                 .count();
 
-        return (double) restfulCount / sessions.size() * 100;
+        return (double) goodSessionsCount / sessions.size() * 100;
     }
 
+   /*   этот код должен идти в main
     public String getSleepAdvice(List<SleepingSession> sessions) {
-        double qualityPercentage = calculateQualityPercentage(sessions);
+       double qualityPercentage = calculateQualityPercentage(sessions);
 
         if (qualityPercentage >= 80) {
             return "Отличный сон! Продолжайте в том же духе. Ваш процент качественного сна: " + qualityPercentage + " %";
@@ -55,8 +59,9 @@ public class SleepAnalyzer {
                     "2. Создать максимально комфортные условия для сна.\n" +
                     "3. Избегать дневного сна.\n" +
                     "Процент качественного сна: " + qualityPercentage + " %";
-        }
     }
+        }*/
+
         public double findAverageDuration(List<SleepingSession> sessions) {
             if (sessions.isEmpty()) {
                 return 0.0;
@@ -71,7 +76,7 @@ public class SleepAnalyzer {
 
     public SleepingSession getWorstNight(List<SleepingSession> sessions) {
         if (sessions.isEmpty()) {
-            throw new IllegalArgumentException("Список сессий пуст");
+            throw new IllegalArgumentException("Список сессий сна пуст");
         }
 
         return sessions.stream()

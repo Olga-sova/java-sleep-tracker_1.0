@@ -1,63 +1,41 @@
 package ru.yandex.practicum.sleeptracker;
 
-public class SleepingSession {
-    private String date; // Дата сна
-    private int startTime; // Время начала сна (например, в минутах от начала суток)
-    private int endTime; // Время окончания сна
-    private boolean isRestful; // Флаг, указывающий на качество сна, для фильтрации сна по качеству пригодится
+import java.time.LocalDateTime;
 
-    public SleepingSession(String date, int startTime, int endTime, boolean isRestful) {
-        this.date = date;
+public class SleepingSession {
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
+    private SleepAnalyzer.SleepQuality quality;
+
+    public SleepingSession(LocalDateTime startTime, LocalDateTime endTime, SleepAnalyzer.SleepQuality quality) {
         this.startTime = startTime;
         this.endTime = endTime;
-        this.isRestful = isRestful;
+        this.quality= quality;
     }
 
 
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public int getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(int startTime) {
+
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
-    public int getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(int endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
 
-    public boolean isRestful() {//для фильтрации сна по качеству пригодится
-        return isRestful;
+    public SleepAnalyzer.SleepQuality getQuality(){
+        return quality;
     }
-
-    public void setRestful(boolean restful) {
-        isRestful = restful;
-    }
-
     @Override
     public String toString() {
-        return "Сессия сна: " +
-                "дата '" + date + '\'' +
-                ", засыпание: " + startTime +
-                ", пробуждение: " + endTime +
-                ", isRestful=" + isRestful +//на сколько качественный был сон
-                '}';
-    }
-
-    // Дополнительный метод — расчёт продолжительности сна в минутах
-    public int getDuration() {
-        return endTime - startTime;
+        return String.format("%s;%s;%s", startTime, endTime, quality);
     }
 }
