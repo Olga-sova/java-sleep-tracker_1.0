@@ -1,5 +1,6 @@
 package ru.yandex.practicum.sleeptracker;
 
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -20,9 +21,9 @@ public class SleepAnalyzer {
         }
     }
 
-    public double calculateQualityPercentage(List<SleepingSession> sessions) { //подсчёт true сессий в процентах
+    public double calculateQualityPercentage(List<SleepingSession> sessions) {
         if (sessions.isEmpty()) {
-            return 0.0; // избегаем деления на ноль
+            return 0.0;
         }
 
         long restfulCount = sessions.stream()
@@ -30,6 +31,52 @@ public class SleepAnalyzer {
                 .count();
 
         return (double) restfulCount / sessions.size() * 100;
+    }
+
+    public String getSleepAdvice(List<SleepingSession> sessions) {
+        double qualityPercentage = calculateQualityPercentage(sessions);
+
+        if (qualityPercentage >= 80) {
+            return "Отличный сон! Продолжайте в том же духе. Ваш процент качественного сна: " + qualityPercentage + " %";
+        } else if (qualityPercentage >= 60) {
+            return "Сон в норме, но есть потенциал для улучшения. Попробуйте:\n" +
+                    "1. Соблюдать режим сна.\n" +
+                    "2. Создать ритуалы перед сном.\n" +
+                    "Ваш процент качественного сна: " + qualityPercentage + " %";
+        } else if (qualityPercentage >= 40) {
+            return "Качество сна ниже среднего. Рекомендуем:\n" +
+                    "1. Ограничить использование гаджетов за час до сна.\n" +
+                    "2. Избегать кофеина во второй половине дня.\n" +
+                    "3. Обеспечить полную темноту и тишину в спальне.\n" +
+                    "Процент качественного сна: " + qualityPercentage + " %";
+        } else {
+            return "Качество сна значительно ниже нормы. Срочно обратитесь к врачу и попробуйте:\n" +
+                    "1. Соблюдать строгий режим сна и пробуждения.\n" +
+                    "2. Создать максимально комфортные условия для сна.\n" +
+                    "3. Избегать дневного сна.\n" +
+                    "Процент качественного сна: " + qualityPercentage + " %";
+        }
+    }
+        public double findAverageDuration(List<SleepingSession> sessions) {
+            if (sessions.isEmpty()) {
+                return 0.0;
+            }
+
+            long totalDuration = sessions.stream()
+                    .mapToLong(SleepingSession::getDuration)
+                    .sum();
+
+            return (double) totalDuration / sessions.size();
+        }
+
+    public SleepingSession getWorstNight(List<SleepingSession> sessions) {
+        if (sessions.isEmpty()) {
+            throw new IllegalArgumentException("Список сессий пуст");
+        }
+
+        return sessions.stream()
+                .min(Comparator.comparingLong(SleepingSession::getDuration))
+                .orElse(null);
     }
 
 }

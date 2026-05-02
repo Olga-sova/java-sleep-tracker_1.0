@@ -38,11 +38,11 @@ public class SleepingSession {
         this.endTime = endTime;
     }
 
-    public boolean isRestful() {
+    public boolean isRestful() {//для фильтрации сна по качеству пригодится
         return isRestful;
     }
 
-    public void setRestful(boolean restful) {//для фильтрации сна по качеству пригодится
+    public void setRestful(boolean restful) {
         isRestful = restful;
     }
 
