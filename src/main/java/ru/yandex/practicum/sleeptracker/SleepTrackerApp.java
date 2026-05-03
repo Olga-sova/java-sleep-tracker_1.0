@@ -4,7 +4,7 @@ public class SleepTrackerApp {
 
     public static void main(String[] args) {
 
-           /*   этот код должен идти в main
+           /*
     public String getSleepAdvice(List<SleepingSession> sessions) {
        double qualityPercentage = calculateQualityPercentage(sessions);
 
