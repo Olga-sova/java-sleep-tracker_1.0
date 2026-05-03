@@ -10,7 +10,7 @@ public class SleepAnalyzer {
     }
 
     public SleepQuality evaluateSession(SleepingSession session) {
-        int duration = session.getDuration();
+        long duration = session.getDuration().toMinutes();
 
         if (duration < 6 * 60) {
             return SleepQuality.BAD;
@@ -36,39 +36,13 @@ public class SleepAnalyzer {
         return (double) goodSessionsCount / sessions.size() * 100;
     }
 
-   /*   этот код должен идти в main
-    public String getSleepAdvice(List<SleepingSession> sessions) {
-       double qualityPercentage = calculateQualityPercentage(sessions);
-
-        if (qualityPercentage >= 80) {
-            return "Отличный сон! Продолжайте в том же духе. Ваш процент качественного сна: " + qualityPercentage + " %";
-        } else if (qualityPercentage >= 60) {
-            return "Сон в норме, но есть потенциал для улучшения. Попробуйте:\n" +
-                    "1. Соблюдать режим сна.\n" +
-                    "2. Создать ритуалы перед сном.\n" +
-                    "Ваш процент качественного сна: " + qualityPercentage + " %";
-        } else if (qualityPercentage >= 40) {
-            return "Качество сна ниже среднего. Рекомендуем:\n" +
-                    "1. Ограничить использование гаджетов за час до сна.\n" +
-                    "2. Избегать кофеина во второй половине дня.\n" +
-                    "3. Обеспечить полную темноту и тишину в спальне.\n" +
-                    "Процент качественного сна: " + qualityPercentage + " %";
-        } else {
-            return "Качество сна значительно ниже нормы. Срочно обратитесь к врачу и попробуйте:\n" +
-                    "1. Соблюдать строгий режим сна и пробуждения.\n" +
-                    "2. Создать максимально комфортные условия для сна.\n" +
-                    "3. Избегать дневного сна.\n" +
-                    "Процент качественного сна: " + qualityPercentage + " %";
-    }
-        }*/
-
         public double findAverageDuration(List<SleepingSession> sessions) {
             if (sessions.isEmpty()) {
                 return 0.0;
             }
 
             long totalDuration = sessions.stream()
-                    .mapToLong(SleepingSession::getDuration)
+                    .mapToLong(session -> session.getDuration().toMinutes())
                     .sum();
 
             return (double) totalDuration / sessions.size();
@@ -80,8 +54,7 @@ public class SleepAnalyzer {
         }
 
         return sessions.stream()
-                .min(Comparator.comparingLong(SleepingSession::getDuration))
+                .min(Comparator.comparingLong(session -> session.getDuration().toMillis()))
                 .orElse(null);
     }
-
 }
