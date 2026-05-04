@@ -21,8 +21,7 @@ public class SleepAnalyzer {
         }
     }
 
-    
-    public SleepingSession getWorstNight(List<SleepingSession> sessions) {
+    public SleepingSession getMinSession(List<SleepingSession> sessions) {
         if (sessions.isEmpty()) {
             throw new IllegalArgumentException("Список сессий сна пуст");
         }
@@ -32,5 +31,14 @@ public class SleepAnalyzer {
                 .orElse(null);
     }
 
+    public SleepingSession getMaxSession(List<SleepingSession> sessions) {
+        if (sessions.isEmpty()) {
+            throw new IllegalArgumentException("Список сессий сна пуст");
+        }
+
+        return sessions.stream()
+                .max(Comparator.comparingLong(session -> session.getDuration().toMillis()))
+                .orElse(null);
+    }
 
 }
